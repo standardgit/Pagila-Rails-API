@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_15_215724) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_15_223243) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,33 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_15_215724) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "customers", force: :cascade do |t|
+    t.bigint "store_id", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.bigint "address_id", null: false
+    t.boolean "activebool"
+    t.datetime "create_date"
+    t.datetime "last_update"
+    t.integer "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_customers_on_address_id"
+    t.index ["store_id"], name: "index_customers_on_store_id"
+  end
+
+  create_table "stores", force: :cascade do |t|
+    t.bigint "address_id", null: false
+    t.datetime "last_update"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_stores_on_address_id"
+  end
+
   add_foreign_key "addresses", "cities"
   add_foreign_key "cities", "countries"
+  add_foreign_key "customers", "addresses"
+  add_foreign_key "customers", "stores"
+  add_foreign_key "stores", "addresses"
 end

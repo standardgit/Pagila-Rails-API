@@ -1,5 +1,6 @@
 class Address < ApplicationRecord
   belongs_to :city
+  has_many :store
 
   validates :address, presence: true
   validates :postal_code, format: {with: /\A[+-]?\d+\z/}, allow_nil: true
