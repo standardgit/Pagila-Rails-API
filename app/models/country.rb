@@ -1,3 +1,4 @@
+# Country Model
 class Country < ApplicationRecord
-    has_many :city
+  has_many :city, dependent: :destroy
 end

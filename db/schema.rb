@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_15_223243) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_20_181445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actors", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.datetime "last_update"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "addresses", force: :cascade do |t|
     t.string "address"
@@ -25,6 +33,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_15_223243) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_addresses_on_city_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "last_update"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cities", force: :cascade do |t|
@@ -59,11 +74,111 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_15_223243) do
     t.index ["store_id"], name: "index_customers_on_store_id"
   end
 
+  create_table "film_actors", force: :cascade do |t|
+    t.bigint "actor_id", null: false
+    t.bigint "film_id", null: false
+    t.datetime "last_update"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_id"], name: "index_film_actors_on_actor_id"
+    t.index ["film_id"], name: "index_film_actors_on_film_id"
+  end
+
+  create_table "film_categories", force: :cascade do |t|
+    t.bigint "film_id", null: false
+    t.bigint "category_id", null: false
+    t.datetime "last_update"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_film_categories_on_category_id"
+    t.index ["film_id"], name: "index_film_categories_on_film_id"
+  end
+
+  create_table "films", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.integer "release_year"
+    t.bigint "language_id", null: false
+    t.integer "rental_duration"
+    t.float "rental_rate"
+    t.integer "length"
+    t.float "replacement_cost"
+    t.string "rating"
+    t.datetime "last_update"
+    t.text "special_features"
+    t.string "fulltext"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["language_id"], name: "index_films_on_language_id"
+  end
+
+  create_table "inventories", force: :cascade do |t|
+    t.bigint "film_id", null: false
+    t.bigint "store_id", null: false
+    t.datetime "last_update"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["film_id"], name: "index_inventories_on_film_id"
+    t.index ["store_id"], name: "index_inventories_on_store_id"
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.string "name"
+    t.datetime "last_update"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.bigint "staff_id", null: false
+    t.float "amount"
+    t.datetime "payment_date"
+    t.bigint "rental_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_payments_on_customer_id"
+    t.index ["rental_id"], name: "index_payments_on_rental_id"
+    t.index ["staff_id"], name: "index_payments_on_staff_id"
+  end
+
+  create_table "rentals", force: :cascade do |t|
+    t.datetime "rental_date"
+    t.bigint "inventory_id", null: false
+    t.bigint "customer_id", null: false
+    t.datetime "return_date"
+    t.bigint "staff_id", null: false
+    t.datetime "last_update"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_rentals_on_customer_id"
+    t.index ["inventory_id"], name: "index_rentals_on_inventory_id"
+    t.index ["staff_id"], name: "index_rentals_on_staff_id"
+  end
+
+  create_table "staffs", force: :cascade do |t|
+    t.string "firstname"
+    t.string "last_name"
+    t.bigint "address_id", null: false
+    t.string "email"
+    t.bigint "store_id", null: false
+    t.boolean "active"
+    t.string "username"
+    t.string "password"
+    t.datetime "last_update"
+    t.string "picture"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_staffs_on_address_id"
+    t.index ["store_id"], name: "index_staffs_on_store_id"
+  end
+
   create_table "stores", force: :cascade do |t|
     t.bigint "address_id", null: false
     t.datetime "last_update"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "manager_staff_id"
     t.index ["address_id"], name: "index_stores_on_address_id"
   end
 
@@ -71,5 +186,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_15_223243) do
   add_foreign_key "cities", "countries"
   add_foreign_key "customers", "addresses"
   add_foreign_key "customers", "stores"
+  add_foreign_key "film_actors", "actors"
+  add_foreign_key "film_actors", "films"
+  add_foreign_key "film_categories", "categories"
+  add_foreign_key "film_categories", "films"
+  add_foreign_key "films", "languages"
+  add_foreign_key "inventories", "films"
+  add_foreign_key "inventories", "stores"
+  add_foreign_key "payments", "customers"
+  add_foreign_key "payments", "rentals"
+  add_foreign_key "payments", "staffs"
+  add_foreign_key "rentals", "customers"
+  add_foreign_key "rentals", "inventories"
+  add_foreign_key "rentals", "staffs"
+  add_foreign_key "staffs", "addresses"
+  add_foreign_key "staffs", "stores"
   add_foreign_key "stores", "addresses"
+  add_foreign_key "stores", "staffs", column: "manager_staff_id"
 end
