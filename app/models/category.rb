@@ -1,4 +1,4 @@
 # category model
 class Category < ApplicationRecord
-  has_many :film, through: :film_category
+  has_many :films, through: :film_categories
 end

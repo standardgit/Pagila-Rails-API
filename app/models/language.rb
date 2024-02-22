@@ -1,4 +1,4 @@
 # Language model
 class Language < ApplicationRecord
-  has_many :film, dependent: :destroy
+  has_many :films, dependent: :destroy
 end
