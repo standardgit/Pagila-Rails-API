@@ -16,14 +16,18 @@ RSpec.describe Actor, type: :model do
       actor.last_name = nil
       expect(actor).not_to be_valid
     end
-    it 'is not valid without a valid last_update attribute'
+
+    it 'is not valid without a valid last_update attribute' do
+      actor.last_update = nil
+      expect(actor).not_to be_valid
+    end
+
     it { is_expected.to validate_presence_of :first_name }
     it { is_expected.to validate_presence_of :last_name }
-
+    it { is_expected.to validate_presence_of :last_update }
   end
 
   describe 'Associations' do
-    it 'have created a relationship with Films'
-    it 'has film categories'
+    it { is_expected.to have_many(:film_actor).without_validating_presence }
   end
 end
