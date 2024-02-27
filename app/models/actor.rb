@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Actor Model
 class Actor < ApplicationRecord
   has_many :films, through: :film_actor
