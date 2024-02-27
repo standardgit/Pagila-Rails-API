@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # REntal
 class Rental < ApplicationRecord
   belongs_to :inventory

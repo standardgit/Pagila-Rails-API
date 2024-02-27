@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # City Model
 class City < ApplicationRecord
   belongs_to :country

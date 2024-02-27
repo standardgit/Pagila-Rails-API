@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Inventory Model
 class Inventory < ApplicationRecord
   belongs_to :film

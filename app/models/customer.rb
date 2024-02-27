@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 # Customer Model
 class Customer < ApplicationRecord
   belongs_to :store
-  belongs_to :address
+  has_one :address, dependent: :destroy
   has_many :payments, dependent: :destroy
   has_one :rental, dependent: :destroy
 
