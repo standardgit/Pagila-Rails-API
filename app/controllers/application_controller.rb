@@ -6,13 +6,7 @@ class ApplicationController < ActionController::A
 	respond_to :json
 
 	before_action :underscore_params!
-	before_action :configure_permitted_parameters, if: :devise_controller?
 	before_action :authenticate_user
-
-	private
-	def configure_permitted_parameters
-		devise_parameter_sanitizer.for(:sign_up) << :username
-	end
 
 	def authenticate_user
 		if request.headers['Authorization'].present?
