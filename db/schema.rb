@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_20_181445) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_20_174436) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,10 +26,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_20_181445) do
     t.string "address"
     t.string "address2"
     t.string "district"
+    t.bigint "city_id", null: false
     t.string "postal_code"
     t.string "phone"
     t.datetime "last_update"
-    t.bigint "city_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_addresses_on_city_id"
@@ -178,7 +178,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_20_181445) do
     t.datetime "last_update"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "manager_staff_id"
     t.index ["address_id"], name: "index_stores_on_address_id"
   end
 
@@ -202,5 +201,4 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_20_181445) do
   add_foreign_key "staffs", "addresses"
   add_foreign_key "staffs", "stores"
   add_foreign_key "stores", "addresses"
-  add_foreign_key "stores", "staffs", column: "manager_staff_id"
 end

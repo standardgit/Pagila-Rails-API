@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+`psql -U kelvin -d pagila_api_development < db/backup/1-actors_data.sql`
+`psql -U kelvin -d pagila_api_development < db/backup/2countries_data.sql`
+`psql -U kelvin -d pagila_api_development < db/backup/3.cities_data.sql`
+`psql -U kelvin -d pagila_api_development < db/backup/4.addresses_data.sql`
+`psql -U kelvin -d pagila_api_development < db/backup/5.categories_data.sql`
+`psql -U kelvin -d pagila_api_development < db/backup/6.stores_data.sql`
