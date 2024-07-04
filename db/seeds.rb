@@ -11,3 +11,6 @@
 `psql -U kelvin -d pagila_api_development < db/backup/4.addresses_data.sql`
 `psql -U kelvin -d pagila_api_development < db/backup/5.categories_data.sql`
 `psql -U kelvin -d pagila_api_development < db/backup/6.stores_data.sql`
+`psql -U kelvin -d pagila_api_development < db/backup/7.customers_data.sql`
+`psql -U kelvin -d pagila_api_development < db/backup/8.languagues_data.sql`
+`psql -U kelvin -d pagila_api_development < db/backup/9.films_data.sql`

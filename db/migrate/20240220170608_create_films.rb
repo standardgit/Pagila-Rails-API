@@ -5,6 +5,7 @@ class CreateFilms < ActiveRecord::Migration[7.0]
       t.string :description
       t.integer :release_year
       t.references :language, null: false, foreign_key: true
+      t.references :original_language, null: true
       t.integer :rental_duration
       t.float :rental_rate
       t.integer :length
@@ -16,5 +17,7 @@ class CreateFilms < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+    add_foreign_key :films, :languages, column: :original_language_id
+
   end
 end
